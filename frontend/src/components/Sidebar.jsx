@@ -28,11 +28,6 @@ function Sidebar({ setSidebarOpen }) {
       icon: <FaServer />,
     },
     {
-      name: "Settings",
-      path: "/settings",
-      icon: <FaCog />,
-    },
-    {
       name: "Reports",
       path:"/reports",
       icon: <TbReportSearch/>

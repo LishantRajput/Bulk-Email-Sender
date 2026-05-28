@@ -4,31 +4,43 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Emails from "./pages/Emails";
 import Users from "./pages/Smtp";
-import Settings from "./pages/Settings";
 import SMTP from "./pages/SMTP";
 import { useEffect } from "react";
 import { useAuthState } from "./hooks/AuthState";
 import Reports from "./pages/Reports";
+import api from "./services/api";
 
 function App() {
-const {isLogin} = useAuthState()
-const navigate = useNavigate()
+  const { isLogin,setIsLogin,setUser } = useAuthState()
+  const navigate = useNavigate()
+
   useEffect(() => {
-    if (isLogin)
-      navigate("/")
-    else
-      navigate("/login")
-  }, [isLogin])
+    checkSession();
+  }, []);
+
+  const checkSession = async () => {
+    try {
+      const response = await api.get("/auth/me", {
+        withCredentials: true,
+      });
+
+      setIsLogin(true);
+      setUser(response.data.user);
+
+    } catch (error) {
+      console.log(error);
+
+      setIsLogin(false);
+    }
+  };
   return (
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/emails" element={<Emails />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/smtp" element={<SMTP />} />
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/reports" element={<Reports />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/emails" element={<Emails />} />
+      <Route path="/smtp" element={<SMTP />} />
+    </Routes>
   );
 }
 

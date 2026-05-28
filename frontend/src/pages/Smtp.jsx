@@ -22,14 +22,11 @@ function SMTP() {
     fetchConfigs();
   }, []);
 
-  // =========================
   // GET SMTP CONFIGS
-  // =========================
+
   const fetchConfigs = async () => {
     try {
       const response = await api.get("/config/smtp");
-
-      console.log(response.data);
 
       setConfigs(response.data.userConfigs || []);
     } catch (error) {
@@ -37,9 +34,7 @@ function SMTP() {
     }
   };
 
-  // =========================
   // HANDLE INPUT CHANGE
-  // =========================
   const handleChange = (e) => {
     const { name, value, type, checked } =
       e.target;
@@ -51,9 +46,8 @@ function SMTP() {
     });
   };
 
-  // =========================
   // CREATE SMTP
-  // =========================
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,16 +81,15 @@ function SMTP() {
 
       alert(
         error?.response?.data?.message ||
-          "Failed to add SMTP"
+        "Failed to add SMTP"
       );
     } finally {
       setLoading(false);
     }
   };
 
-  // =========================
   // DELETE SMTP
-  // =========================
+
   const handleDelete = async (id) => {
     try {
       await api.delete(`/config/smtp/${id}`);
@@ -109,9 +102,9 @@ function SMTP() {
     }
   };
 
-  // =========================
+
   // SET DEFAULT SMTP
-  // =========================
+
   const handleSetDefault = async (id) => {
     try {
       await api.post(
@@ -126,19 +119,25 @@ function SMTP() {
     }
   };
 
-  // =========================
   // TEST SMTP
-  // =========================
+
   const handleTest = async () => {
+    console.log("Start test lineno 127")
     try {
+      console.log("start conection test")
       const response = await api.post(
         "/config/smtp/test",
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
-
+      console.log(response)
+      console.log(error.response?.data);
       alert(response.data.message);
     } catch (error) {
       console.log(error);
+
 
       alert("SMTP Test Failed");
     }
@@ -147,7 +146,7 @@ function SMTP() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        
+
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold">
@@ -160,10 +159,10 @@ function SMTP() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          
+
           {/* FORM */}
           <div className="xl:col-span-2 bg-white rounded-2xl shadow border">
-            
+
             {/* Header */}
             <div className="bg-blue-600 text-white px-5 py-4 rounded-t-2xl">
               <h2 className="text-xl font-semibold">
@@ -176,7 +175,7 @@ function SMTP() {
               onSubmit={handleSubmit}
               className="p-6 space-y-5"
             >
-              
+
               {/* Name */}
               <div>
                 <label className="block font-medium mb-2">
@@ -195,7 +194,7 @@ function SMTP() {
 
               {/* Host + Port */}
               <div className="grid md:grid-cols-3 gap-5">
-                
+
                 <div className="md:col-span-2">
                   <label className="block font-medium mb-2">
                     SMTP Host
@@ -316,7 +315,7 @@ function SMTP() {
 
               {/* Buttons */}
               <div className="flex flex-wrap gap-3">
-                
+
                 <button
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl"
@@ -339,7 +338,7 @@ function SMTP() {
 
           {/* CONFIG LIST */}
           <div className="bg-white rounded-2xl shadow border p-5">
-            
+
             <h2 className="text-2xl font-bold mb-5">
               Saved Configurations
             </h2>
@@ -357,7 +356,7 @@ function SMTP() {
                   className="border rounded-xl p-4"
                 >
                   <div className="flex items-center justify-between">
-                    
+
                     <div>
                       <h3 className="font-bold">
                         {config.name}
@@ -376,7 +375,7 @@ function SMTP() {
                   </div>
 
                   <div className="flex flex-wrap gap-2 mt-4">
-                    
+
                     {!config.isDefault && (
                       <button
                         onClick={() =>
