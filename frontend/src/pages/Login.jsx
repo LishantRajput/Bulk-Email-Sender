@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { errorEmitter, successEmitter } from "../utils/toastemitter";
 import { useAuthState } from "../hooks/AuthState";
-import { localToken } from "../services/localtocken";
 
 const Login = () => {
 
   var message
   const [activeTab, setActiveTab] = useState("login");
-  const {loading, setLoading,isLogin, setIsLogin} = useAuthState()
+  const {loading, setLoading,isLogin, setIsLogin,user,setUser} = useAuthState()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +35,7 @@ const Login = () => {
         password: formData.password,
       });
       console.log(response)
+      setUser(response.data.user)
       setIsLogin(true)
       navigate("/");
       successEmitter("Login Successfull")
