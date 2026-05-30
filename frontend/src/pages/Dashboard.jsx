@@ -6,10 +6,10 @@ import { useAuthState } from "../hooks/AuthState";
 
 function Dashboard() {
   const navigate = useNavigate();
-const {islogin}= useAuthState()
+const {isLogin}= useAuthState()
 useEffect(()=>{
-  if(!islogin) navigate("/login")
-},[islogin])
+  if(!isLogin) navigate("/login")
+},[isLogin])
   const [dashboardData, setDashboardData] =
     useState(null);
 
