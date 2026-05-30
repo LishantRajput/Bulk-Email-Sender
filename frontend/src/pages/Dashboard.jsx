@@ -9,7 +9,7 @@ function Dashboard() {
 const {islogin}= useAuthState()
 useEffect(()=>{
   if(!islogin) navigate("/login")
-})
+},[islogin])
   const [dashboardData, setDashboardData] =
     useState(null);
 
