@@ -6,10 +6,10 @@ import { useAuthState } from "../hooks/AuthState";
 
 function Dashboard() {
   const navigate = useNavigate();
-const {isLogin}= useAuthState()
-useEffect(()=>{
-  if(!isLogin) navigate("/login")
-},[isLogin])
+  const { isLogin } = useAuthState()
+  useEffect(() => {
+    if (!isLogin) navigate("/login")
+  }, [isLogin, navigate])
   const [dashboardData, setDashboardData] =
     useState(null);
 
@@ -118,7 +118,7 @@ useEffect(()=>{
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        
+
         {/* Header */}
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
@@ -159,7 +159,7 @@ useEffect(()=>{
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          
+
           {/* Live Activity */}
           <div className="bg-white p-5 sm:p-6 rounded-2xl shadow">
             <div className="flex items-center justify-between mb-5">
@@ -173,7 +173,7 @@ useEffect(()=>{
             </div>
 
             <div className="space-y-4">
-              
+
               {/* Batch Status */}
               <div className="border rounded-xl p-4 flex items-center justify-between">
                 <div>
@@ -222,10 +222,10 @@ useEffect(()=>{
                 <div className="mt-4 space-y-3">
                   {dashboardData?.scheduledJobs
                     ?.length === 0 && (
-                    <p className="text-sm text-gray-500">
-                      No scheduled jobs
-                    </p>
-                  )}
+                      <p className="text-sm text-gray-500">
+                        No scheduled jobs
+                      </p>
+                    )}
 
                   {dashboardData?.scheduledJobs?.map(
                     (job, index) => (
@@ -256,8 +256,8 @@ useEffect(()=>{
                 <p className="text-sm text-gray-500">
                   {dashboardData?.timestamp
                     ? new Date(
-                        dashboardData.timestamp
-                      ).toLocaleString()
+                      dashboardData.timestamp
+                    ).toLocaleString()
                     : "N/A"}
                 </p>
               </div>
@@ -271,7 +271,7 @@ useEffect(()=>{
             </h2>
 
             <div className="space-y-4">
-              
+
               <button
                 className="w-full bg-black text-white py-3 sm:py-4 rounded-xl hover:opacity-90 transition"
               >

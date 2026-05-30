@@ -37,8 +37,8 @@ const Login = () => {
       });
       console.log(response)
       setIsLogin(true)
-      successEmitter("Login Successfull")
       navigate("/");
+      successEmitter("Login Successfull")
     } catch (error) {
       console.log(error);
       if (error?.response?.data?.message)
