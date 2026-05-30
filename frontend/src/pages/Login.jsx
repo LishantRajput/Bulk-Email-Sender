@@ -37,8 +37,6 @@ const Login = () => {
       });
       console.log(response)
       setIsLogin(true)
-      localStorage.setItem("token",localToken())
-      console.log(document.cookie);
       successEmitter("Login Successfull")
       navigate("/");
     } catch (error) {

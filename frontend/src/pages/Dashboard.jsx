@@ -18,9 +18,7 @@ function Dashboard() {
   const [loading, setLoading] =
     useState(true);
 
-  // =========================
   // FETCH SMTP CONFIG COUNT
-  // =========================
   const fetchSMTPConfigs = async () => {
     try {
       const response = await api.get(
@@ -35,9 +33,7 @@ function Dashboard() {
     }
   };
 
-  // =========================
   // FETCH POLL STATUS
-  // =========================
   const fetchPollStatus = async () => {
     try {
       const response = await api.get(
@@ -54,9 +50,7 @@ function Dashboard() {
     }
   };
 
-  // =========================
   // FETCH DASHBOARD DATA
-  // =========================
   const fetchDashboardData = async () => {
     try {
       const response = await api.get(
@@ -76,18 +70,14 @@ function Dashboard() {
     }
   };
 
-  // =========================
   // INITIAL LOAD
-  // =========================
   useEffect(() => {
     fetchSMTPConfigs();
     fetchPollStatus();
     fetchDashboardData();
   }, []);
 
-  // =========================
   // AUTO POLLING
-  // =========================
   useEffect(() => {
     const interval = setInterval(() => {
       fetchPollStatus();
@@ -97,9 +87,7 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, [pollInterval]);
 
-  // =========================
   // STATS
-  // =========================
   const stats = [
     {
       title: "SMTP Configs",

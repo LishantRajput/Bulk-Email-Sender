@@ -23,9 +23,8 @@ function Navbar({ setSidebarOpen }) {
   const { user } = useAuthState()
   const [open, setOpen] = useState(false)
   const navigate = useNavigate();
-  const usercheck = () => {
     console.log(user)
-  }
+  
   const handleLogout = async () => {
     try {
 
@@ -70,13 +69,14 @@ function Navbar({ setSidebarOpen }) {
           <button
             className="rounded-full py-3 px-8 bg-blue-600 text-white cursor-pointer "
             onClick={() => { setOpen(!open), console.log(open) }}>
-            {user?.name} ▼
+              
+            {user ? user.name: "Loading..."} ▼
           </button>
 
           {/* Dropdown */}
           {open && (
             <div className="w-[280px] absolute rounded-[10px] shadow-md bg-gray-100">
-              <div style={itemStyle}>{user?.email}</div>
+              <div style={itemStyle}>{user? user.email: "user@gmail.com"}</div>
               <div style={itemStyle}>SMTP Configration</div>
               <div
                 className="text-red-400"
