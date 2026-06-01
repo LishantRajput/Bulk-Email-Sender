@@ -6,6 +6,7 @@ import { errorEmitter, successEmitter } from "../utils/toastemitter";
 function Smtp() {
   const [configs, setConfigs] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [smtpTest, setSmtpTest] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -60,7 +61,7 @@ function Smtp() {
         formData
       );
 
-      console.log("Line no 63",response);
+      console.log("Line no 63", response);
       // if (response.success) {
       //   successEmitter("SMTP Added Successfully");
       // }
@@ -128,6 +129,7 @@ function Smtp() {
 
   const handleTest = async () => {
     try {
+      setSmtpTest(true)
       const response = await api.post(
         "/config/smtp/test",
         formData,
@@ -147,6 +149,8 @@ function Smtp() {
       console.log("Error:", error);
 
       errorEmitter("SMTP Test Failed");
+    } finally {
+      setSmtpTest(false)
     }
   };
 
@@ -325,7 +329,7 @@ function Smtp() {
 
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl"
+                  className={`border px-5 py-3 rounded-xl ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-800 cursor-pointer"}`}
                 >
                   {loading
                     ? "Saving..."
@@ -335,7 +339,8 @@ function Smtp() {
                 <button
                   type="button"
                   onClick={handleTest}
-                  className="border px-5 py-3 rounded-xl"
+                  disabled={smtpTest}
+                  className={`border px-5 py-3 rounded-xl ${smtpTest ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-800 cursor-pointer"}`}
                 >
                   Test Connection
                 </button>

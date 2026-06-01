@@ -14,7 +14,7 @@ import {
   Eye,
   Rocket,
 } from "lucide-react";
-import { errorEmitter, successEmitter } from "../utils/toastemitter";
+import { errorEmitter, successEmitter, warningEmitter } from "../utils/toastemitter";
 
 function Emails() {
   const [subject, setSubject] = useState("");
