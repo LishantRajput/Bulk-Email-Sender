@@ -287,8 +287,10 @@ app.get("/config/smtp/active", (c) => {
 
 // GET - Test SMTP connection
 app.post("/config/smtp/test", async (c) => {
-  try {
+  
     console.log("request recived line no 291")
+  try {
+    console.log("request recived line no 293")
     const user = requireAuth(c);
     const body = await c.req.json();
 

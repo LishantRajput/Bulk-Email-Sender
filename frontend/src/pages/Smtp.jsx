@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import api from "../services/api";
+import { errorEmitter, successEmitter } from "../utils/toastemitter";
 
 function Smtp() {
   const [configs, setConfigs] = useState([]);
@@ -59,9 +60,13 @@ function Smtp() {
         formData
       );
 
-      console.log(response.data);
+      console.log("Line no 63",response);
+      // if (response.success) {
+      //   successEmitter("SMTP Added Successfully");
+      // }
+      // else{
 
-      alert("SMTP Added Successfully");
+      // }
 
       fetchConfigs();
 
@@ -79,7 +84,7 @@ function Smtp() {
     } catch (error) {
       console.log(error);
 
-      alert(
+      errorEmitter(
         error?.response?.data?.message ||
         "Failed to add SMTP"
       );
@@ -122,9 +127,7 @@ function Smtp() {
   // TEST SMTP
 
   const handleTest = async () => {
-    console.log("Start test lineno 127")
     try {
-      console.log("start conection test")
       const response = await api.post(
         "/config/smtp/test",
         formData,
@@ -132,14 +135,18 @@ function Smtp() {
           withCredentials: true,
         }
       );
-      console.log(response)
-      console.log(error.response?.data);
-      alert(response.data.message);
+      if (response.data.success) {
+        successEmitter(response.data.message)
+      }
+      else {
+        errorEmitter(response.data.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Status:", error.response?.status);
+      console.log("Data:", error.response?.data);
+      console.log("Error:", error);
 
-
-      alert("SMTP Test Failed");
+      errorEmitter("SMTP Test Failed");
     }
   };
 

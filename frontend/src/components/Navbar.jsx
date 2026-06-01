@@ -22,9 +22,7 @@ function Navbar({ setSidebarOpen }) {
   const bgColor = colors[Math.floor(Math.random() * colors.length)];
   const { user } = useAuthState()
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate();
-    console.log(user)
-  
+  const navigate = useNavigate();  
   const handleLogout = async () => {
     try {
 

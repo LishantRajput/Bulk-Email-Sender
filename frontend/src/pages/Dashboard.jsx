@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import api from "../services/api";
-import { useAuthState } from "../hooks/AuthState";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { isLogin } = useAuthState()
-  useEffect(() => {
-    if (!isLogin) navigate("/login")
-  }, [isLogin, navigate])
+
   const [dashboardData, setDashboardData] =
     useState(null);
 

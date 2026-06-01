@@ -14,6 +14,7 @@ import {
   Eye,
   Rocket,
 } from "lucide-react";
+import { errorEmitter, successEmitter } from "../utils/toastemitter";
 
 function Emails() {
   const [subject, setSubject] = useState("");
@@ -82,7 +83,7 @@ function Emails() {
     } catch (error) {
       console.log(error);
 
-      alert("Failed to parse excel file");
+      errorEmitter("Failed to parse excel file");
     }
   };
 
@@ -91,19 +92,19 @@ function Emails() {
     try {
       console.log(previewContacts)
       if (!selectedFile) {
-        return alert("Please upload excel file");
+        return warningEmitter("Please upload excel file");
       }
 
       if (!selectedConfig) {
-        return alert("Please select SMTP config");
+        return warningEmitter("Please select SMTP config");
       }
 
       if (!subject) {
-        return alert("Please enter subject");
+        return warningEmitter("Please enter subject");
       }
 
       if (!message) {
-        return alert("Please enter email content");
+        return warningEmitter("Please enter email content");
       }
 
       setLoading(true);
@@ -140,16 +141,16 @@ function Emails() {
         "/send",
         formData
       );
-
-      alert(response.data.message);
-
-      console.log(response.data);
+      if (response.data.success)
+        successEmitter(response.data.message);
+      else
+        errorEmitter(response.data.message)
     } catch (error) {
       console.log(error);
 
-      alert(
+      errorEmitter(
         error?.response?.data?.message ||
-          "Failed to send emails"
+        "Failed to send emails"
       );
     } finally {
       setLoading(false);

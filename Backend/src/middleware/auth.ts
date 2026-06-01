@@ -20,7 +20,7 @@ export async function authMiddleware(c: Context, next: Next) {
     "/css",
     "/js",
   ];
-
+console.log("Line no 23 auth.ts")
   if (publicPaths.some((p) => path.startsWith(p)) || path === "/") {
     return await next();
   }
@@ -44,6 +44,7 @@ export async function authMiddleware(c: Context, next: Next) {
 
   // Add user to context
   c.user = user;
+  console.log("Line no 47 auth ")
   return await next();
 }
 

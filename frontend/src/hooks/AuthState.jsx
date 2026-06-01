@@ -5,7 +5,7 @@ export const authContext = createContext(null);
 function AuthState({ children }) {
 
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(null);
   const [user, setUser] = useState({})
 
   return (
