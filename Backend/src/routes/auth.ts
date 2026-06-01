@@ -126,8 +126,8 @@ app.post("/auth/login", async (c) => {
 
     setCookie(c, "session_token", token, {
       httpOnly: true,
-      secure: isHTTPS, // Only secure if actually on HTTPS
-      sameSite: "lax",
+      secure: true,        // ALWAYS true in production
+      sameSite: "None",    // MUST for Netlify ↔ Render
       maxAge: 24 * 60 * 60,
       path: "/",
     });
